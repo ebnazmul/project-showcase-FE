@@ -6,22 +6,29 @@ const Products = () => {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
-  const [filterOptions, setFilterOptions] = useState({})
+  const [category, setCategory] = useState("");
+  const [brand, setBrand] = useState("");
+
+  const [filterOptions, setFilterOptions] = useState({});
   const [totalDataLength, setTotalDataLength] = useState(0);
   const totalPages = Math.ceil(totalDataLength / 12);
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/products/?page=${page}&search=${search}`)
+      .get(
+        `http://localhost:3000/products/?page=${page}&search=${search}&category=${category}&brand=${brand}`
+      )
       .then((res) => {
         setData(res.data.data);
         setTotalDataLength(res.data.totalDocCount);
       });
-  }, [page, search]);
+  }, [brand, category, page, search]);
 
-  useEffect(()=>{
-
-  },[])
+  useEffect(() => {
+    axios.get("http://localhost:3000/products/filterOptions").then((res) => {
+      setFilterOptions(res.data);
+    });
+  }, []);
 
   return (
     <div className="max-w-screen-2xl mx-auto my-4">
@@ -33,16 +40,48 @@ const Products = () => {
           type="text"
           className="bg-gray-400 px-4 py-2 outline-none placeholder:text-gray-200 rounded"
         />
-        <div>
-          <select name="" id=""></select>
-        </div>
+        {filterOptions.brandNames && (
+          <div className="space-x-1 space-y-1">
+            <select
+              onChange={(e) => setCategory(e.target.value)}
+              defaultValue=""
+              className="px-2 py-1 bg-gray-200 rounded">
+              <option disabled value="">
+                Select a category
+              </option>
+              {filterOptions.categorys.map((el, i) => (
+                <option key={i} value={el}>
+                  {el}
+                </option>
+              ))}
+            </select>
+
+            <select
+              defaultValue=""
+              onChange={(e) => setBrand(e.target.value)}
+              className="px-2 py-1 bg-gray-200 rounded">
+              <option disabled value="">
+                Choose a brand name
+              </option>
+              {filterOptions.brandNames.map((el, i) => (
+                <option key={i} value={el}>
+                  {el}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
       </div>
 
-      <div className="p-1 md:p-2 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-6 lg:gap-3 md:gap-2 gap-1">
-        {data.map((item, i) => (
-          <ProductCard data={item} key={i} />
-        ))}
-      </div>
+      {data.length ? (
+        <div className="p-1 md:p-2 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-6 lg:gap-3 md:gap-2 gap-1">
+          {data.map((item, i) => (
+            <ProductCard data={item} key={i} />
+          ))}
+        </div>
+      ) : (
+        <h2 className="text-2xl text-center">No data found!!</h2>
+      )}
 
       <div className="flex justify-center gap-2 py-4">
         <button
