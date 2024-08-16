@@ -35,7 +35,7 @@ const Products = () => {
   return (
     <div className="max-w-screen-2xl mx-auto my-4">
       <h1 className="text-center text-xl mb-2">Products..</h1>
-      <div className="mb-4 flex justify-between">
+      <div className="mb-4 md:flex justify-between p-1">
         <input
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search..."
@@ -43,7 +43,7 @@ const Products = () => {
           className="bg-gray-400 px-4 py-2 outline-none placeholder:text-gray-200 rounded"
         />
         {filterOptions.brandNames && (
-          <div className="space-x-1 space-y-1">
+          <div className="md:space-x-1 space-y-1">
             <select
               onChange={(e) => setCategory(e.target.value)}
               defaultValue=""
