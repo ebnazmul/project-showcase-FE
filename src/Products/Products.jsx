@@ -18,7 +18,7 @@ const Products = () => {
   useEffect(() => {
     axios
       .get(
-        `http://localhost:3000/products/?page=${page}&search=${search}&sort=${sort}&category=${category}&brand=${brand}&priceRange=${priceRange}`
+        `https://showcase-be.vercel.app/products/?page=${page}&search=${search}&sort=${sort}&category=${category}&brand=${brand}&priceRange=${priceRange}`
       )
       .then((res) => {
         setData(res.data.data);
@@ -27,7 +27,7 @@ const Products = () => {
   }, [brand, category, page, priceRange, search, sort]);
 
   useEffect(() => {
-    axios.get("http://localhost:3000/products/filterOptions").then((res) => {
+    axios.get("https://showcase-be.vercel.app/products/filterOptions").then((res) => {
       setFilterOptions(res.data);
     });
   }, []);
