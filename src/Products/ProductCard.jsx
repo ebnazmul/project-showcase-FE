@@ -1,15 +1,15 @@
 const ProductCard = ({ data }) => {
 
-  const { productName, description, category, ratings, price } = data;
+  const { productName, description, category, ratings, price, productImage } = data;
 
   
-  const image_url = `https://picsum.photos/200/300?random=${Math.random()}`;
+ 
   return (
     <div className="border border-gray-300 rounded hover:bg-gray-100 hover:shadow-lg duration-300 cursor-pointer">
       <img
         className="mb-2 w-full h-40 bg-cover"
         loading="lazy"
-        src={image_url}
+        src={productImage}
         alt={productName}
       />
       <div className="p-1 md:p-2">
