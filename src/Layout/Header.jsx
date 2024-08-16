@@ -5,7 +5,8 @@ import { AuthContexts } from "../Context/AuthContext";
 
 const Header = () => {
   const navigate = useNavigate();
-  const { user } = useContext(AuthContexts);
+  const { user, handleSignOut } = useContext(AuthContexts);
+
 
   return (
     <div className="w-full bg-gray-700/20">
@@ -27,10 +28,10 @@ const Header = () => {
             src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
             alt=""
           />
-          <button><img className="w-8 h-8" src="https://cdn-icons-png.flaticon.com/512/2529/2529508.png" alt="" /></button>
+          <button onClick={handleSignOut}><img className="w-8 h-8" src="https://cdn-icons-png.flaticon.com/512/2529/2529508.png" alt="" /></button>
           </div>
         ) : (
-          <Button fn={() => navigate("/login")} text="Sign In" />
+          <Button fn={() => navigate("/signin")} text="Sign In" />
         )}
       </div>
     </div>
